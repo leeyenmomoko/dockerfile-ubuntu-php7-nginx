@@ -9,7 +9,7 @@ RUN apt-get -y install nginx \
     php-gettext php-pear php-imagick \
     php7.0-curl php7.0-dev libgpgme11-dev libpcre3-dev \
     php7.0-fpm php7.0-gd php7.0-imap \
-    php7.0-mcrypt php7.0-mysqlnd php7.0-sybase \
+    php7.0-mcrypt php7.0-mysqlnd php7.0-sybase php7.0-mbstring \
     php7.0-intl git nano wget supervisor curl
 
 RUN curl -sL https://getcomposer.org/installer | php \
