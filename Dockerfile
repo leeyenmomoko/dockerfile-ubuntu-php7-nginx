@@ -16,14 +16,16 @@ RUN curl -sL https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
 # html to pdf
-RUN apt-get install -y libssl-dev libxrender-dev gdebi
-RUN cd /tmp && \
-   wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
-   gdebi --n wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
-RUN apt-get -y install xvfb fonts-wqy-microhei
+ RUN apt-get install -y gdebi
+ RUN cd /tmp && \
+    wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
+    gdebi --n wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+RUN apt-get -y install wkhtmltox xvfb fonts-wqy-microhei
 
 RUN apt-get remove -y vim-common
 RUN apt-get install -y vim
+
+#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y xorg
 
 RUN echo 'LANG="en_US.UTF-8"' > /etc/default/locale && \
     echo 'LANG="zh_TW.UTF-8"' > /etc/default/locale && \
@@ -42,9 +44,19 @@ RUN echo 'LANG="en_US.UTF-8"' > /etc/default/locale && \
     locale-gen ko_KR.UTF-8 && \
     locale-gen ja_JP.UTF-8
 
-COPY ./configs/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
-COPY ./configs/supervisord/conf.d/* /etc/supervisor/conf.d/
+RUN mkdir /run/php
 
+COPY ./configs/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY ./configs/supervisor/conf.d/ /etc/supervisor/conf.d/
+COPY ./configs/php/php.ini /etc/php/7.0/fpm/php.ini
+COPY ./configs/php/php.ini /etc/php/7.0/cli/php.ini
+COPY ./configs/php/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+
+COPY ./configs/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./configs/nginx/sites-enabled/ /etc/nginx/sites-enabled/
+COPY ./configs/nginx/conf.d/ /etc/nginx/conf.d/
+
+VOLUME ["/var/www/html", "/etc/nginx/conf.d", "/etc/nginx/sites-enabled"]
 CMD ["/usr/bin/supervisord"]
 
 EXPOSE 80
