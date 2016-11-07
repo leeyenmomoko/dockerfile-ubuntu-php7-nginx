@@ -152,6 +152,7 @@ RUN mkdir -p /opt/openresty/nginx/conf/sites-enabled \
     && mkdir -p /opt/openresty/nginx/conf/conf.d
 COPY ./configs/nginx/sites-enabled/ /opt/openresty/nginx/conf/sites-enabled/
 COPY ./configs/nginx/conf.d/ /opt/openresty/nginx/conf/conf.d/
+RUN mkdir -p /var/log/nginx
 
 #RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 #    && ln -sf /dev/stderr /var/log/nginx/error.log
