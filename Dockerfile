@@ -101,7 +101,7 @@ RUN \
     && ln -sf /dev/stderr /opt/openresty/nginx/logs/error.log
 
 RUN apt-get -y update
-RUN apt-get -y install php-gettext php-pear php-imagick \
+RUN apt-get -y install php-gettext php-pear php-imagick php-solr \
     php7.0-curl php7.0-dev libgpgme11-dev libpcre3-dev \
     php7.0-fpm php7.0-gd php7.0-imap \
     php7.0-mcrypt php7.0-mysqlnd php7.0-sybase php7.0-mbstring \
