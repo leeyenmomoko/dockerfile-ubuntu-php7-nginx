@@ -105,7 +105,9 @@ RUN apt-get -y install php-gettext php-pear php-imagick php-solr \
     php7.0-curl php7.0-dev libgpgme11-dev libpcre3-dev \
     php7.0-fpm php7.0-gd php7.0-imap \
     php7.0-mcrypt php7.0-mysqlnd php7.0-sybase php7.0-mbstring \
-    php7.0-intl php7.0-zip git nano wget supervisor curl
+    php7.0-intl php7.0-zip git nano wget supervisor curl pkg-config
+
+RUN pecl install mongodb
 
 RUN curl -sL https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
@@ -146,6 +148,9 @@ COPY ./configs/supervisor/conf.d/ /etc/supervisor/conf.d/
 COPY ./configs/php/php.ini /etc/php/7.0/fpm/php.ini
 COPY ./configs/php/php.ini /etc/php/7.0/cli/php.ini
 COPY ./configs/php/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+
+RUN echo "extension=mongodb.so" >> /etc/php/7.0/cli/php.ini \
+    && echo "extension=mongodb.so" >> /etc/php/7.0/fpm/php.ini
 
 COPY ./configs/nginx/nginx.conf /opt/openresty/nginx/conf/nginx.conf
 RUN mkdir -p /opt/openresty/nginx/conf/sites-enabled \
