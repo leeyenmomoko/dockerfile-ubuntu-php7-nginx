@@ -105,7 +105,8 @@ RUN apt-get -y install php-gettext php-pear php-imagick php-solr \
     php7.0-curl php7.0-dev libgpgme11-dev libpcre3-dev \
     php7.0-fpm php7.0-gd php7.0-imap \
     php7.0-mcrypt php7.0-mysqlnd php7.0-sybase php7.0-mbstring \
-    php7.0-intl php7.0-zip git nano wget supervisor curl pkg-config
+    php7.0-intl php7.0-zip php7.0-soap \
+    git nano wget supervisor curl pkg-config dialog
 
 RUN pecl install mongodb
 
