@@ -161,7 +161,7 @@ COPY ./configs/nginx/conf.d/ /opt/openresty/nginx/conf/conf.d/
 COPY ./resource /var/www/html
 RUN mkdir -p /var/log/nginx
 
-#RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+# RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 #    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 VOLUME ["/var/www/html", "/opt/openresty/nginx/conf/conf.d", "/opt/openresty/nginx/conf/sites-enabled"]
