@@ -10,7 +10,10 @@ RUN apt-get -y install nginx \
     php7.0-curl php7.0-dev libgpgme11-dev libpcre3-dev \
     php7.0-fpm php7.0-gd php7.0-imap \
     php7.0-mcrypt php7.0-mysqlnd php7.0-sybase php7.0-mbstring \
-    php7.0-intl php7.0-zip git nano wget supervisor curl
+    php7.0-intl php7.0-zip php7.0-soap \
+    git nano wget supervisor curl pkg-config dialog
+
+RUN pecl install mongodb
 
 RUN curl -sL https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
@@ -55,6 +58,8 @@ COPY ./configs/php/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
 COPY ./configs/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./configs/nginx/sites-enabled/ /etc/nginx/sites-enabled/
 COPY ./configs/nginx/conf.d/ /etc/nginx/conf.d/
+RUN echo "extension=mongodb.so" >> /etc/php/7.0/cli/php.ini \
+    && echo "extension=mongodb.so" >> /etc/php/7.0/fpm/php.ini
 
 #RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 #    && ln -sf /dev/stderr /var/log/nginx/error.log
