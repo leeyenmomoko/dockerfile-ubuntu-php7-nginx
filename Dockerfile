@@ -153,6 +153,7 @@ COPY ./configs/php/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
 RUN echo "extension=mongodb.so" >> /etc/php/7.0/cli/php.ini \
     && echo "extension=mongodb.so" >> /etc/php/7.0/fpm/php.ini
 
+RUN /opt/openresty/nginx/conf/nginx.conf /opt/openresty/nginx/conf/nginx.conf.original
 COPY ./configs/nginx/nginx.conf /opt/openresty/nginx/conf/nginx.conf
 RUN mkdir -p /opt/openresty/nginx/conf/sites-enabled \
     && mkdir -p /opt/openresty/nginx/conf/conf.d
