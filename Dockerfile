@@ -100,6 +100,9 @@ RUN \
     && ln -sf /dev/stdout /opt/openresty/nginx/logs/access.log \
     && ln -sf /dev/stderr /opt/openresty/nginx/logs/error.log
 
+RUN echo "export PATH=/opt/openresty/bin:$PATH" >> ~/.bashrc \
+    && ln -s /opt/openresty/nginx/sbin/nginx /opt/openresty/bin/nginx
+
 RUN apt-get -y update
 RUN apt-get -y install php-gettext php-pear php-imagick php-solr \
     php7.0-curl php7.0-dev libgpgme11-dev libpcre3-dev \
